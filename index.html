@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VELFARO · SECURE ARCHIVE</title>
     <style>
-        /* الأنماط - كما هي مع إضافة .credit */
         * {
             margin: 0;
             padding: 0;
@@ -41,7 +40,6 @@
             display: flex;
         }
 
-        /* تأثيرات الحركة */
         .glitch {
             animation: glitch 1s infinite;
         }
@@ -274,7 +272,6 @@
             100% { text-shadow: 5px 0 red, -5px 0 blue; }
         }
 
-        /* توقيع المبرمج */
         .credit {
             font-size: 1rem;
             color: #0f0;
@@ -299,6 +296,53 @@
             background: repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0px, rgba(0,0,0,0.5) 2px, transparent 3px);
             pointer-events: none;
             z-index: 0;
+        }
+
+        /* -------------------- */
+        /*  كود الموبايل (الشاشات الصغيرة) */
+        /* -------------------- */
+        @media (max-width: 600px) {
+            .velfaro-main {
+                font-size: 3rem;
+                letter-spacing: 4px;
+            }
+            .velfaro-sub {
+                font-size: 1.2rem;
+            }
+            .velfaro-warning {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+            .access-line {
+                font-size: 1.8rem;
+            }
+            .access-sub {
+                font-size: 1rem;
+            }
+            .puzzle-question {
+                font-size: 2rem;
+            }
+            .puzzle-input {
+                font-size: 1.2rem;
+                width: 120px;
+                padding: 8px 12px;
+            }
+            .puzzle-btn {
+                font-size: 1.2rem;
+                padding: 8px 20px;
+            }
+            .form-title {
+                font-size: 1.5rem;
+            }
+            .form-container {
+                padding: 20px;
+            }
+            #session-ended {
+                font-size: 2rem;
+            }
+            .credit {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
