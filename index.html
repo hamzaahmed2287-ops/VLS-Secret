@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELFARO · SECURE ARCHIVE</title>
+    <style>
+        /* الأنماط - كما هي مع إضافة .credit */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+
+        .phase {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: black;
+            padding: 20px;
+        }
+
+        .phase.active {
+            display: flex;
+        }
+
+        /* تأثيرات الحركة */
+        .glitch {
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 red, -2px 0 blue; }
+            50% { text-shadow: -2px 0 red, 2px 0 blue; }
+            100% { text-shadow: 2px 0 red, -2px 0 blue; }
+        }
+
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s steps(3, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid #0f0;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.15em;
+            animation: typing 2s steps(20, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #0f0; }
+        }
+
+        .velfaro-main {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #b00;
+            text-shadow: 0 0 20px #f00;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; text-shadow: 0 0 20px #f00; }
+            50% { opacity: 0.7; text-shadow: 0 0 40px #f00; }
+            100% { opacity: 1; text-shadow: 0 0 20px #f00; }
+        }
+
+        .velfaro-sub {
+            font-size: 1.8rem;
+            color: #fa0;
+            margin-bottom: 30px;
+        }
+
+        .velfaro-warning {
+            font-size: 1rem;
+            color: #f44;
+            border: 1px solid #f44;
+            padding: 8px 16px;
+            background: rgba(255,0,0,0.2);
+            box-shadow: 0 0 15px #f00;
+        }
+
+        .access-line {
+            font-size: 2.5rem;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+        }
+
+        .access-sub {
+            font-size: 1.2rem;
+            color: #0a0;
+            margin-top: 20px;
+        }
+
+        .puzzle-box {
+            background: #111;
+            padding: 40px;
+            border: 2px solid #0f0;
+            box-shadow: 0 0 30px #0f0;
+        }
+
+        .puzzle-question {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #ff0;
+            text-shadow: 0 0 10px #ff0;
+        }
+
+        .puzzle-input {
+            background: black;
+            border: 2px solid #0f0;
+            color: #0f0;
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            width: 150px;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .puzzle-input:focus {
+            outline: none;
+            box-shadow: 0 0 30px #0f0;
+        }
+
+        .puzzle-btn {
+            background: #0f0;
+            color: black;
+            border: none;
+            font-size: 1.5rem;
+            padding: 10px 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .puzzle-btn:hover {
+            background: #0a0;
+            box-shadow: 0 0 40px #0f0;
+        }
+
+        .form-container {
+            background: #111;
+            padding: 40px;
+            border: 2px solid #0f0;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .form-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #f00;
+            text-decoration: underline;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            color: #0f0;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            background: black;
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 12px 15px;
+            font-size: 1.2rem;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-width: 2px;
+            box-shadow: 0 0 20px #0f0;
+        }
+
+        .submit-btn {
+            background: #0f0;
+            color: black;
+            border: none;
+            font-size: 1.5rem;
+            padding: 15px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #0a0;
+            box-shadow: 0 0 30px #0f0;
+        }
+
+        #transmission-message {
+            margin-top: 30px;
+            font-size: 1.8rem;
+            color: #0f0;
+            border: 2px solid #0f0;
+            padding: 20px;
+            background: rgba(0,255,0,0.1);
+            display: none;
+            animation: blink 0.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        #session-ended {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: black;
+            color: red;
+            font-size: 3rem;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            animation: finalGlitch 2s infinite;
+        }
+
+        @keyframes finalGlitch {
+            0% { text-shadow: 5px 0 red, -5px 0 blue; }
+            25% { text-shadow: -5px 0 red, 5px 0 blue; }
+            50% { text-shadow: 5px 5px red, -5px -5px blue; }
+            75% { text-shadow: -5px -5px red, 5px 5px blue; }
+            100% { text-shadow: 5px 0 red, -5px 0 blue; }
+        }
+
+        /* توقيع المبرمج */
+        .credit {
+            font-size: 1rem;
+            color: #0f0;
+            margin-top: 20px;
+            opacity: 0.7;
+            text-transform: none;
+            letter-spacing: 2px;
+        }
+
+        .error-message {
+            color: #f00;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        #background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0px, rgba(0,0,0,0.5) 2px, transparent 3px);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="background-overlay"></div>
+    
+    <!-- شاشة انتهاء الجلسة + التوقيع -->
+    <div id="session-ended">
+        SESSION TERMINATED
+        <div class="credit">Designed & programmed by Hamza Ahmed</div>
+    </div>
+
+    <!-- المرحلة 1 -->
+    <div id="phase1" class="phase active">
+        <div id="phase1-loading" style="font-size: 3rem;">LOADING<span class="loading-dots"></span></div>
+        <div id="phase1-content" style="display: none;">
+            <div class="velfaro-main">VELFARO</div>
+            <div class="velfaro-sub">Secure Archive Division</div>
+            <div class="velfaro-warning typewriter">Unauthorized access is prohibited</div>
+        </div>
+    </div>
+
+    <!-- المرحلة 2 -->
+    <div id="phase2" class="phase">
+        <div class="access-line">LOADING<span class="loading-dots"></span></div>
+        <div class="access-sub">ACCESSING FILE <span id="file-progress">0%</span></div>
+    </div>
+
+    <!-- المرحلة 3 (اللغز) -->
+    <div id="phase3" class="phase">
+        <div class="puzzle-box">
+            <div class="puzzle-question">2 + 98 = ?</div>
+            <input type="number" id="puzzle-answer" class="puzzle-input" placeholder="__" autofocus>
+            <button id="puzzle-submit" class="puzzle-btn">VERIFY</button>
+            <div id="puzzle-error" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- المرحلة 4 (النموذج) -->
+    <div id="phase4" class="phase">
+        <div class="form-container">
+            <div class="form-title">CASE SUBMISSION FORM</div>
+            <div class="form-group">
+                <label>FULL NAME</label>
+                <input type="text" id="fullName" placeholder="e.g., JOHN DOE">
+            </div>
+            <div class="form-group">
+                <label>Enter your assigned ID</label>
+                <input type="text" id="assignedId" placeholder="e.g., AGENT-007">
+            </div>
+            <button id="submit-form" class="submit-btn">SUBMIT</button>
+            <div id="transmission-message">TRANSMISSION RECEIVED</div>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ ضع رابط تطبيق Google Sheets هنا
+        const googleSheetsURL = 'https://script.google.com/macros/s/AKfycbw-UdLSGlm9whrtIM89xBZolgiBE0icJEEV08dEu3f6YHm3EvmpWVZFNQLhb8FYAoIG/exec';
+
+        // عناصر الصفحة
+        const phase1 = document.getElementById('phase1');
+        const phase2 = document.getElementById('phase2');
+        const phase3 = document.getElementById('phase3');
+        const phase4 = document.getElementById('phase4');
+        const sessionEnded = document.getElementById('session-ended');
+        const loading1 = document.getElementById('phase1-loading');
+        const content1 = document.getElementById('phase1-content');
+        const fileProgress = document.getElementById('file-progress');
+        const puzzleAnswer = document.getElementById('puzzle-answer');
+        const puzzleSubmit = document.getElementById('puzzle-submit');
+        const puzzleError = document.getElementById('puzzle-error');
+        const fullNameInput = document.getElementById('fullName');
+        const assignedIdInput = document.getElementById('assignedId');
+        const submitFormBtn = document.getElementById('submit-form');
+        const transmissionMsg = document.getElementById('transmission-message');
+
+        // متغير لتخزين إجابة اللغز الصحيحة
+        let userAnswer = '';
+
+        // دالة الانتقال بين المراحل
+        function goToPhase(fromPhase, toPhase) {
+            fromPhase.classList.remove('active');
+            toPhase.classList.add('active');
+        }
+
+        // تسلسل المرحلة 1 → 2 → 3
+        setTimeout(() => {
+            // إنهاء تحميل المرحلة 1 وإظهار النص
+            loading1.style.display = 'none';
+            content1.style.display = 'block';
+
+            setTimeout(() => {
+                goToPhase(phase1, phase2);
+
+                // محاكاة تقدم الملف في المرحلة 2
+                let progress = 0;
+                const interval = setInterval(() => {
+                    if (!phase2.classList.contains('active')) {
+                        clearInterval(interval);
+                        return;
+                    }
+                    progress += Math.floor(Math.random() * 10) + 5;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            goToPhase(phase2, phase3);
+                        }, 500);
+                    }
+                    fileProgress.textContent = progress + '%';
+                }, 400);
+            }, 3000);
+        }, 1500);
+
+        // التحقق من اللغز
+        puzzleSubmit.addEventListener('click', () => {
+            const answer = puzzleAnswer.value.trim();
+            if (answer === '100') {
+                userAnswer = answer;               // تخزين الإجابة
+                goToPhase(phase3, phase4);
+                puzzleError.textContent = '';
+            } else {
+                puzzleError.textContent = 'ACCESS DENIED';
+            }
+        });
+
+        // إرسال النموذج
+        submitFormBtn.addEventListener('click', () => {
+            const fullName = fullNameInput.value.trim();
+            const assignedId = assignedIdInput.value.trim();
+
+            if (!fullName || !assignedId) {
+                alert('ALL FIELDS ARE REQUIRED');
+                return;
+            }
+
+            // إظهار رسالة الإرسال
+            transmissionMsg.style.display = 'block';
+
+            // إرسال البيانات (الاسم، ID، والإجابة)
+            fetch(googleSheetsURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fullName: fullName,
+                    assignedId: assignedId,
+                    answer: userAnswer
+                })
+            })
+            .then(() => console.log('Data sent with answer:', userAnswer))
+            .catch(err => {
+                console.error(err);
+                alert('فشل الإرسال. تأكد من الرابط.');
+            });
+
+            // إغلاق الجلسة بعد ثانيتين
+            setTimeout(() => {
+                document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+                sessionEnded.style.display = 'flex';
+            }, 2000);
+        });
+
+        // تأثير flickering عشوائي
+        setInterval(() => {
+            document.body.style.animation = 'none';
+            setTimeout(() => {
+                document.body.style.animation = 'flicker 0.2s';
+            }, 50);
+        }, 8000);
+
+        // تغيير عنوان الصفحة ديناميكياً
+        const titles = ['VELFARO', 'SECURE ARCHIVE', 'ACCESSING', 'CLASSIFIED'];
+        let idx = 0;
+        setInterval(() => {
+            document.title = titles[idx % titles.length] + ' █';
+            idx++;
+        }, 1200);
+    </script>
+
+    <style>
+        @keyframes flicker {
+            0% { opacity: 1; }
+            10% { opacity: 0.8; background-color: #111; }
+            20% { opacity: 1; }
+            30% { opacity: 0.9; background-color: #200; }
+            40% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+    </style>
+</body>
+</html>
